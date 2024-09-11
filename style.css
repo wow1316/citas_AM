@@ -1,115 +1,57 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #fce4ec; /* Color de fondo general (rosa claro) */
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  color: #333; /* Color del texto principal */
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Citas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="AM LASH STUDIO Logo" class="logo"> <!-- Logo restaurado -->
+        <h1>Reserva tu cita en AM LASH STUDIO</h1>
+        
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+        
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" required>
+        
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" required>
+        
+        <button onclick="reservarCita()">Reservar</button>
 
-.container {
-  text-align: center;
-  background-color: #fff; /* Fondo del contenedor principal */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 30px; /* Ajuste el valor del margen superior según sea necesario */
-  max-width: 900px; /* Ancho máximo del contenedor para dispositivos móviles */
-  width: 300%; /* 90% del ancho de la ventana */
-  margin: auto; /* Centrar el contenedor en dispositivos móviles */
-}
+        <div id="horario-buttons">
+            <button value="10:00" onclick="seleccionarHora('10:00')">10:00 AM</button>
+            <button value="12:00" onclick="seleccionarHora('12:00')">12:00 PM</button>
+            <button value="14:00" onclick="seleccionarHora('14:00')">2:00 PM</button>
+            <button value="16:00" onclick="seleccionarHora('16:00')">4:00 PM</button>
+            <button value="18:00" onclick="seleccionarHora('18:00')">6:00 PM</button>
+        </div>
 
-.logo {
-  max-width: 100%; /* Hacer que el logo sea responsivo */
-  height: auto;
-  margin-bottom: 20px;
-}
+        <div class="gallery">
+            <div class="image">
+                <img src="imagen1.jpg" alt="Imagen 1">
+            </div>
+            <div class="image">
+                <img src="imagen2.jpg" alt="Imagen 2">
+            </div>
+            <div class="image">
+                <img src="imagen3.jpg" alt="Imagen 3">
+            </div>
+            <div class="image">
+                <img src="imagen4.jpg" alt="Imagen 4">
+            </div>
+        </div>
 
-h1 {
-  color: #e91e63; /* Color del título principal */
-}
+    </div>
 
-p {
-  color: #9c27b0; /* Color del párrafo */
-}
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
 
-label {
-  color: #e91e63; /* Color de las etiquetas */
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #e91e63;
-  border-radius: 5px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #e91e63;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #d81b60;
-}
-
-#horario-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-#horario-buttons button {
-  width: 45%;
-  margin: 5px;
-  padding: 10px;
-  background-color: #9c27b0;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#horario-buttons button:hover {
-  background-color: #8e24aa;
-}
-
-button.reservado-gris {
-  background-color: gray;
-  color: white;
-  cursor: not-allowed;
-}
-
-button.libre {
-  background-color: green;
-  color: white;
-}
-
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.image {
-  text-align: center;
-  width: 45%;
-  margin-bottom: 10px;
-}
-
-.image img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
   overflow: hidden;
 }
