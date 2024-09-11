@@ -1,65 +1,47 @@
-// Cargar las reservas desde el Local Storage cuando la página se carga
-document.addEventListener('DOMContentLoaded', () => {
-  const reservasGuardadas = localStorage.getItem('reservas');
-  if (reservasGuardadas) {
-    reservas.push(...JSON.parse(reservasGuardadas)); // Cargar reservas almacenadas
-  }
-  actualizarColores(); // Actualizar los botones de horas al cargar la página
-});
+// Configuración de Firebase
+var firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_AUTH_DOMAIN",
+    databaseURL: "TU_DATABASE_URL",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_STORAGE_BUCKET",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    appId: "TU_APP_ID"
+};
 
-const reservas = [];
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
 
-// Función para reservar una hora
+// Función para reservar cita
 function reservarCita() {
-  const nombre = document.getElementById('nombre').value;
-  const selectedDate = document.getElementById('fecha').value;
-  const selectedTime = document.getElementById('hora').value;
+    var nombre = document.getElementById('nombre').value;
+    var fecha = document.getElementById('fecha').value;
+    var hora = document.getElementById('hora').value;
 
-  if (reservas.some(reserva => reserva.fecha === selectedDate && reserva.hora === selectedTime)) {
-    alert('La fecha y hora seleccionadas ya están reservadas. Por favor, elige otra.');
-    return;
-  }
-
-  if (nombre && selectedDate && selectedTime) {
-    const message = `¡Reserva realizada con éxito!\n\nSe ha programado una cita a nombre de ${nombre} para el día ${selectedDate} a las ${selectedTime} en ${document.getElementById('nombre-estetica').textContent} LASH STUDIO.`;
-    const whatsappLink = `https://wa.me/5214922045101?text=${encodeURIComponent(message)}`;
-    
-    // Abrir enlace en otra ventana
-    window.open(whatsappLink, '_blank');
-    
-    // Marcar la hora y fecha como reservada y guardarla en Local Storage
-    reservas.push({ fecha: selectedDate, hora: selectedTime });
-    localStorage.setItem('reservas', JSON.stringify(reservas)); // Guardar en Local Storage
-    actualizarColores();
-  } else {
-    alert('Por favor, completa todos los campos para reservar tu cita.');
-  }
-}
-
-// Función para seleccionar la hora
-function seleccionarHora(hora) {
-  document.getElementById('hora').value = hora;
-}
-
-// Función para actualizar colores y deshabilitar botones de horas reservadas
-function actualizarColores() {
-  const botonesHoras = document.querySelectorAll('#horario-buttons button');
-  const fechaSeleccionada = document.getElementById('fecha').value;
-
-  botonesHoras.forEach((boton) => {
-    const horaBoton = boton.value;
-
-    if (reservas.some(reserva => reserva.fecha === fechaSeleccionada && reserva.hora === horaBoton)) {
-      boton.classList.add('reservado-gris');
-      boton.classList.remove('libre');
-      boton.disabled = true; 
-    } else {
-      boton.classList.add('libre');
-      boton.classList.remove('reservado-gris');
-      boton.disabled = false; 
+    if (!nombre || !fecha || !hora) {
+        alert("Por favor, completa todos los campos");
+        return;
     }
-  });
+
+    var reservasRef = database.ref('reservas');
+    reservasRef.orderByChild('fecha_hora').equalTo(fecha + ' ' + hora).once('value', function(snapshot) {
+        if (snapshot.exists()) {
+            alert('Ya existe una reserva en esta fecha y hora.');
+        } else {
+            var nuevaReservaRef = reservasRef.push();
+            nuevaReservaRef.set({
+                nombre: nombre,
+                fecha: fecha,
+                hora: hora,
+                fecha_hora: fecha + ' ' + hora
+            });
+            alert('¡Reserva realizada con éxito!');
+        }
+    });
 }
 
-// Actualizar los colores y el estado de los botones cuando se selecciona una nueva fecha
-document.getElementById('fecha').addEventListener('change', actualizarColores);
+// Función para seleccionar la hora desde los botones
+function seleccionarHora(hora) {
+    document.getElementById('hora').value = hora;
+}
