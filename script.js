@@ -29,6 +29,7 @@ function reservarCita() {
         if (snapshot.exists()) {
             alert('Ya existe una reserva en esta fecha y hora.');
         } else {
+            // Guardar la nueva reserva en Firebase
             var nuevaReservaRef = reservasRef.push();
             nuevaReservaRef.set({
                 nombre: nombre,
@@ -36,12 +37,24 @@ function reservarCita() {
                 hora: hora,
                 fecha_hora: fecha + ' ' + hora
             });
+
+            // Crear el mensaje para WhatsApp
+            var message = `¡Reserva realizada con éxito!\n\nSe ha programado una cita a nombre de ${nombre} para el día ${fecha} a las ${hora} en AM LASH STUDIO.`;
+            var whatsappLink = `https://wa.me/5214922045101?text=${encodeURIComponent(message)}`;
+
+            // Abrir enlace de WhatsApp
+            window.open(whatsappLink, '_blank');
+
             alert('¡Reserva realizada con éxito!');
         }
     });
 }
 
 // Función para seleccionar la hora desde los botones
+function seleccionarHora(hora) {
+    document.getElementById('hora').value = hora;
+}
+los botones
 function seleccionarHora(hora) {
     document.getElementById('hora').value = hora;
 }
