@@ -1,0 +1,115 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fce4ec; /* Color de fondo general (rosa claro) */
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #333; /* Color del texto principal */
+}
+
+.container {
+  text-align: center;
+  background-color: #fff; /* Fondo del contenedor principal */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px; /* Ajuste el valor del margen superior según sea necesario */
+  max-width: 900px; /* Ancho máximo del contenedor para dispositivos móviles */
+  width: 300%; /* 90% del ancho de la ventana */
+  margin: auto; /* Centrar el contenedor en dispositivos móviles */
+}
+
+.logo {
+  max-width: 100%; /* Hacer que el logo sea responsivo */
+  height: auto;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #e91e63; /* Color del título principal */
+}
+
+p {
+  color: #9c27b0; /* Color del párrafo */
+}
+
+label {
+  color: #e91e63; /* Color de las etiquetas */
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #e91e63;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #e91e63;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d81b60;
+}
+
+#horario-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#horario-buttons button {
+  width: 45%;
+  margin: 5px;
+  padding: 10px;
+  background-color: #9c27b0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#horario-buttons button:hover {
+  background-color: #8e24aa;
+}
+
+button.reservado-gris {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+}
+
+button.libre {
+  background-color: green;
+  color: white;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.image {
+  text-align: center;
+  width: 45%;
+  margin-bottom: 10px;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
