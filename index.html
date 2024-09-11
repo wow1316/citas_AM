@@ -4,70 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva de Citas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Reserva de Citas</h1>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" required>
-    
-    <label for="fecha">Fecha:</label>
-    <input type="date" id="fecha" required>
+    <div class="container">
+        <h1>Reserva tu cita en AM LASH STUDIO</h1>
+        
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+        
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" required>
+        
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" required>
+        
+        <button onclick="reservarCita()">Reservar</button>
 
-    <label for="hora">Hora:</label>
-    <input type="time" id="hora" required>
+        <div id="horario-buttons">
+            <button value="10:00" onclick="seleccionarHora('10:00')">10:00 AM</button>
+            <button value="12:00" onclick="seleccionarHora('12:00')">12:00 PM</button>
+            <button value="14:00" onclick="seleccionarHora('14:00')">2:00 PM</button>
+            <button value="16:00" onclick="seleccionarHora('16:00')">4:00 PM</button>
+            <button value="18:00" onclick="seleccionarHora('18:00')">6:00 PM</button>
+        </div>
 
-    <button onclick="reservarCita()">Reservar</button>
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-
-    <script>
-        // Tu configuración de Firebase proporcionada en el paso anterior
-        var firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            databaseURL: "TU_DATABASE_URL",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
-        };
-
-        // Inicializar Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        var database = firebase.database();
-
-        // Función para reservar cita
-        function reservarCita() {
-            var nombre = document.getElementById('nombre').value;
-            var fecha = document.getElementById('fecha').value;
-            var hora = document.getElementById('hora').value;
-
-            // Verificar si los campos están completos
-            if (!nombre || !fecha || !hora) {
-                alert("Por favor, completa todos los campos");
-                return;
-            }
-
-            // Verificar si ya existe la reserva
-            var reservasRef = database.ref('reservas');
-            reservasRef.orderByChild('fecha_hora').equalTo(fecha + ' ' + hora).once('value', function(snapshot) {
-                if (snapshot.exists()) {
-                    alert('Ya existe una reserva en esta fecha y hora.');
-                } else {
-                    // Guardar la nueva reserva en Firebase
-                    var nuevaReservaRef = reservasRef.push();
-                    nuevaReservaRef.set({
-                        nombre: nombre,
-                        fecha: fecha,
-                        hora: hora,
-                        fecha_hora: fecha + ' ' + hora
-                    });
-                    alert('¡Reserva realizada con éxito!');
-                }
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
